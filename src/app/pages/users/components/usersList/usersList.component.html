@@ -6,7 +6,11 @@
           <mat-grid-tile> <mat-icon matListItemIcon fontIcon="">person</mat-icon> </mat-grid-tile>
           <mat-grid-tile>{{ user.name }}</mat-grid-tile>
           <mat-grid-tile>{{ user.email }}</mat-grid-tile>
-          <mat-grid-tile> <mat-icon matListItemIcon fontIcon="">edit</mat-icon> </mat-grid-tile>
+          <mat-grid-tile
+            ><button matFab extended>
+              <mat-icon>edit</mat-icon>
+            </button></mat-grid-tile
+          >
         </mat-grid-list>
       </mat-list-item>
     }

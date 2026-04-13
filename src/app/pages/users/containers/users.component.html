@@ -7,10 +7,10 @@
     <span>Usuários</span>
   </div>
 
-  <form>
+  <form [formGroup]="filterUsersForm">
     <mat-form-field class="search">
-      <mat-label>Pesquisar</mat-label>
-      <input type="text" matInput placeholder="David Eduardo Lino" />
+      <mat-label>Pesquisar Nome</mat-label>
+      <input formControlName="name" type="text" matInput placeholder="David Eduardo Lino" />
     </mat-form-field>
   </form>
 </mat-toolbar>

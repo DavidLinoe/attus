@@ -4,10 +4,14 @@ import { UsersFilter, UsersList } from '../models/users.models';
 @Injectable()
 export class UsersApi {
   constructor() {}
-  // aqui importaria o http
 
   getUsers(filters?: UsersFilter) {
-    return apiUsersResponse.filter((user) => user.name.includes(filters ? filters?.name : ''));
+    return apiUsersResponse.filter((user) =>
+      user.name
+        .toLowerCase()
+        .trim()
+        .includes(filters ? filters?.name.toLowerCase().trim() : ''),
+    );
   }
 }
 
