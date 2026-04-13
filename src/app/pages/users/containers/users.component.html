@@ -15,5 +15,8 @@
   </form>
 </mat-toolbar>
 
+<attus-users-list (openEditModal)="openEditModal($event)" [users]="users"></attus-users-list>
 
-<attus-users-list [users]="users"></attus-users-list>
+@if (modalIsOpened) {
+  modal
+}
