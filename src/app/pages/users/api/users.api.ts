@@ -1,22 +1,12 @@
 import { Injectable } from '@angular/core';
-import { UsersFilter, UsersList } from '../models/users.models';
+import { UsersFilter } from '../models/users.models';
+import { ApiService } from '../../../services/apiService.service';
 
 @Injectable()
 export class UsersApi {
-  constructor() {}
+  constructor(private apiService: ApiService) {}
 
   getUsers(filters?: UsersFilter) {
-    return apiUsersResponse.filter((user) =>
-      user.name
-        .toLowerCase()
-        .trim()
-        .includes(filters ? filters?.name.toLowerCase().trim() : ''),
-    );
+    return this.apiService.get('users', filters?.name);
   }
 }
-
-const apiUsersResponse: UsersList[] = [
-  { name: 'David Lino', email: 'davidelino290@gmail.com' },
-  { name: 'Giana Sandrini', email: 'giana@attus.com' },
-  { name: 'Jonh Doe ', email: 'jonh@gmail.com' },
-];

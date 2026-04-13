@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { UsersListComponent } from '../components/usersList/usersList.component';
 import { UsersFilter, UsersList } from '../models/users.models';
 import { UsersApi } from '../api/users.api';
@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbar } from '@angular/material/toolbar';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { debounceTime } from 'rxjs';
+import { ApiService } from '../../../services/apiService.service';
 
 @Component({
   templateUrl: './users.component.html',
@@ -22,12 +24,13 @@ import { CommonModule } from '@angular/common';
     MatFormFieldModule,
     MatInputModule,
   ],
-  providers: [UsersApi],
+  providers: [ApiService,UsersApi],
 })
-export class UsersComponent {
+export class UsersComponent implements OnDestroy {
   filterUsersForm!: FormGroup;
 
-  users: UsersList[] = [];
+  public users: UsersList[] = [];
+  private formSubscription;
 
   constructor(
     private usersApiService: UsersApi,
@@ -36,9 +39,15 @@ export class UsersComponent {
     this.filterUsersForm = this.formBuilder.group({
       name: '',
     });
-    this.filterUsersForm.valueChanges.subscribe((filter: UsersFilter) => {
-      this.users = this.usersApiService.getUsers(filter);
+
+    this.formSubscription = this.filterUsersForm.valueChanges.subscribe((filter: UsersFilter) => {
+      this.usersApiService.getUsers(filter).subscribe((users) => (this.users = users));
     });
+
     this.filterUsersForm.enable();
+  }
+
+  ngOnDestroy(): void {
+    this.formSubscription.unsubscribe();
   }
 }
