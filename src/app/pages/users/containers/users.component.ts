@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { CommonModule } from '@angular/common';
 import { switchMap } from 'rxjs';
 import { ApiService } from '../../../services/apiService.service';
+import { NewUserModalComponent } from '../components/newUserModal/newUserModal.component';
 
 @Component({
   templateUrl: './users.component.html',
@@ -19,6 +20,7 @@ import { ApiService } from '../../../services/apiService.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NewUserModalComponent,
     UsersListComponent,
     MatToolbar,
     MatIconModule,
