@@ -1,0 +1,14 @@
+<mat-nav-list>
+  @if (users().length > 0) {
+    @for (user of users(); track $index) {
+      <mat-list-item>
+        <mat-grid-list cols="4">
+          <mat-grid-tile> <mat-icon matListItemIcon fontIcon="">person</mat-icon> </mat-grid-tile>
+          <mat-grid-tile>{{ user.name }}</mat-grid-tile>
+          <mat-grid-tile>{{ user.email }}</mat-grid-tile>
+          <mat-grid-tile> <mat-icon matListItemIcon fontIcon="">edit</mat-icon> </mat-grid-tile>
+        </mat-grid-list>
+      </mat-list-item>
+    }
+  }
+</mat-nav-list>
