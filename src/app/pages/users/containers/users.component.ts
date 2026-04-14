@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UsersListComponent } from '../components/usersList/usersList.component';
 import { UsersFilter, UsersList } from '../models/users.models';
@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { switchMap } from 'rxjs';
 import { ApiService } from '../../../services/apiService.service';
 import { NewUserModalComponent } from '../components/newUserModal/newUserModal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   templateUrl: './users.component.html',
@@ -29,6 +30,7 @@ import { NewUserModalComponent } from '../components/newUserModal/newUserModal.c
 export class UsersComponent {
   public filterUsersForm!: FormGroup;
   public modalIsOpened: boolean = false;
+  readonly dialog = inject(MatDialog);
 
   public users: UsersList[] = [];
 
@@ -53,5 +55,13 @@ export class UsersComponent {
   openEditModal(event: UsersList) {
     console.log(event);
     this.modalIsOpened = !this.modalIsOpened;
+
+    const dialogRef = this.dialog.open(NewUserModalComponent, {
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+    });
   }
 }

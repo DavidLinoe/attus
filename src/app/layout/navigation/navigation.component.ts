@@ -16,4 +16,11 @@ import { MatDrawer, MatDrawerContainer, MatDrawerContent } from '@angular/materi
     MatDrawerContent,
   ],
 })
-export class NavigationComponent {}
+export class NavigationComponent {
+  public activePage: string = '';
+
+  constructor() {}
+
+ 
+
+}

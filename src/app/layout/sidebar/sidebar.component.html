@@ -1,6 +1,8 @@
 <mat-list>
-  <mat-list-item (click)="router.navigateByUrl('/')">Home</mat-list-item>
-  <mat-list-item (click)="router.navigateByUrl('users')">Users</mat-list-item>
-  <mat-list-item (click)="router.navigateByUrl('cart')">Cart</mat-list-item>
-  <mat-list-item (click)="router.navigateByUrl('todo')">To-do List</mat-list-item>
+  @for (item of sideUrls; track $index) {
+    <mat-list-item
+      (click)="router.navigateByUrl(item.url); navigationState.navbarHeader.next(item.label)"
+      >{{ item.label }}</mat-list-item
+    >
+  }
 </mat-list>

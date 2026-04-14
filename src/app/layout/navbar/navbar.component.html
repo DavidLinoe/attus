@@ -3,8 +3,7 @@
     <button matIconButton class="example-icon" aria-label="Example icon-button with menu icon">
       <mat-icon (click)="onSideBarToggle.emit(true)">menu</mat-icon>
     </button>
-
-    <span>Usuários</span>
+    <span>{{ navigationState.navbarHeader.value  }}</span>
   </div>
 
   <form [formGroup]="filterUsersForm">

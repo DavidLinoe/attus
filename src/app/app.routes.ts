@@ -19,6 +19,10 @@ export const routes: Routes = [
     component: UsersComponent,
   },
   {
+    path: 'person',
+    component: UsersComponent,
+  },
+  {
     path: '**',
     redirectTo: '',
   },

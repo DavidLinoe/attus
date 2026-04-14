@@ -1,7 +1,7 @@
-<attus-navbar (onSideBarToggle)="drawer.toggle()"></attus-navbar>
+<attus-navbar [activePage]="activePage" (onSideBarToggle)="drawer.toggle()"></attus-navbar>
 
 <mat-drawer-container [hasBackdrop]="true">
-  <mat-drawer #drawer mode="over" opened>
+  <mat-drawer #drawer mode="over">
     <attus-sidebar></attus-sidebar>
   </mat-drawer>
   <mat-drawer-content>
