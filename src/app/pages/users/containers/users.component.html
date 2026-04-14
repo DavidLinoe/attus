@@ -1,19 +1,4 @@
-<mat-toolbar class="container">
-  <div class="menu">
-    <button matIconButton class="example-icon" aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon>
-    </button>
 
-    <span>Usuários</span>
-  </div>
-
-  <form [formGroup]="filterUsersForm">
-    <mat-form-field class="search">
-      <mat-label>Pesquisar Nome</mat-label>
-      <input formControlName="name" type="text" matInput placeholder="David Eduardo Lino" />
-    </mat-form-field>
-  </form>
-</mat-toolbar>
 
 <attus-users-list (openEditModal)="openEditModal($event)" [users]="users"></attus-users-list>
 

@@ -1,0 +1,10 @@
+<attus-navbar (onSideBarToggle)="drawer.toggle()"></attus-navbar>
+
+<mat-drawer-container [hasBackdrop]="true">
+  <mat-drawer #drawer mode="over" opened>
+    <attus-sidebar></attus-sidebar>
+  </mat-drawer>
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>
