@@ -12,6 +12,8 @@ import { PessoaService } from '../services/person.service';
 export class PersonComponent implements OnInit, OnDestroy {
   //*exercicio exercicio 2.1
   public texto: BehaviorSubject<string> = new BehaviorSubject('');
+  public texto2: BehaviorSubject<string> = new BehaviorSubject('');
+
   private contador = 0;
   private subscriptionBuscarPessoa?: Subscription;
 
@@ -23,7 +25,7 @@ export class PersonComponent implements OnInit, OnDestroy {
     });
     setInterval(() => this.contador++, 1000);
 
-    // this.ngOnInit2();
+    this.ngOnInit2();
   }
 
   //*exercicio  2.2
@@ -32,7 +34,7 @@ export class PersonComponent implements OnInit, OnDestroy {
     const pessoaId = 1;
     this.pessoaService.buscarPorId(pessoaId).subscribe((pessoa) => {
       this.pessoaService.buscarQuantidadeFamiliares(pessoaId).subscribe((qtd: number) => {
-        this.texto.next(`Nome: ${pessoa.nome} | familiares: ${qtd}`);
+        this.texto2.next(`Nome: ${pessoa.nome} | familiares: ${qtd}`);
       });
     });
   }
