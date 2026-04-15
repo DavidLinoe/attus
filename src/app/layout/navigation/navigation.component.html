@@ -1,12 +1,11 @@
 <attus-navbar
   (onSearch)="onSearch($event)"
-  [activePage]="activePage"
   (onSideBarToggle)="drawer.toggle()"
 ></attus-navbar>
 
 <mat-drawer-container [hasBackdrop]="true">
   <mat-drawer #drawer mode="over">
-    <attus-sidebar></attus-sidebar>
+    <attus-sidebar [sideUrls]="sideUrls"></attus-sidebar>
   </mat-drawer>
   <mat-drawer-content>
     <div style="min-height: 100vh">

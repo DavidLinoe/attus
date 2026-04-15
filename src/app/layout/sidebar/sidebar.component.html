@@ -1,8 +1,5 @@
 <mat-list>
-  @for (item of sideUrls; track $index) {
-    <mat-list-item
-      (click)="router.navigateByUrl(item.url); navbarState.navbarHeader.next(item.label)"
-      >{{ item.label }}</mat-list-item
-    >
+  @for (item of sideUrls(); track $index) {
+    <mat-list-item (click)="router.navigateByUrl(item.url)">{{ item.label }}</mat-list-item>
   }
 </mat-list>

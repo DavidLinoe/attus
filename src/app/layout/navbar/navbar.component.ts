@@ -1,8 +1,10 @@
 import { Component, input, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatFormField, MatPrefix } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatToolbar } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatInputModule } from '@angular/material/input';
@@ -21,13 +23,13 @@ import { NavbarState } from './navbar.state';
     ReactiveFormsModule,
     MatIcon,
     MatFormField,
-    MatLabel,
+    MatPrefix,
+    MatButtonModule,
   ],
 })
 export class NavbarComponent {
   public filterUsersForm!: FormGroup;
   public onSideBarToggle = output<boolean>();
-  public activePage = input<string>();
   public onSearch = output<string>();
 
   constructor(
@@ -38,6 +40,8 @@ export class NavbarComponent {
       search: '',
     });
 
-    this.filterUsersForm.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => this.navbarState.search.next(value.search));
+    this.filterUsersForm.valueChanges
+      .pipe(takeUntilDestroyed())
+      .subscribe((value) => this.navbarState.search.next(value.search));
   }
 }
