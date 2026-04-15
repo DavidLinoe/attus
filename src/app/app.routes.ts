@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { UsersComponent } from './pages/users/containers/users.component';
 import { HomeComponent } from './pages/home/containers/home.component';
 import { PersonComponent } from './pages/person/containers/person.component';
+import { TodoComponent } from './pages/todo/containers/todo.component';
+import { CartComponent } from './pages/cart/containers/cart.component';
 
 export const routes: Routes = [
   {
@@ -14,11 +16,11 @@ export const routes: Routes = [
   },
   {
     path: 'todo',
-    component: UsersComponent,
+    component: TodoComponent,
   },
   {
     path: 'cart',
-    component: UsersComponent,
+    component: CartComponent,
   },
   {
     path: 'person',
