@@ -1,12 +1,18 @@
 import { Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UsersListComponent } from '../components/usersList/usersList.component';
-import { UsersFilter, UsersList } from '../models/users.models';
+import { NewUserForm, UsersFilter, UsersList } from '../models/users.models';
 import { UsersApi } from '../api/users.api';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { switchMap } from 'rxjs';
 import { ApiService } from '../../../services/apiService.service';
@@ -19,7 +25,6 @@ import { MatDialog } from '@angular/material/dialog';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NewUserModalComponent,
     UsersListComponent,
     MatIconModule,
     MatFormFieldModule,
@@ -29,9 +34,8 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class UsersComponent {
   public filterUsersForm!: FormGroup;
-  public modalIsOpened: boolean = false;
+  public newUsersForm!: FormGroup;
   readonly dialog = inject(MatDialog);
-
   public users: UsersList[] = [];
 
   constructor(
@@ -40,6 +44,14 @@ export class UsersComponent {
   ) {
     this.filterUsersForm = this.formBuilder.group({
       name: '',
+    });
+
+    this.newUsersForm = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required]],
+      phone: ['', [Validators.required]],
+      cpf: ['', [Validators.required]],
+      phoneType: ['', [Validators.required]],
     });
 
     this.filterUsersForm.valueChanges
@@ -54,14 +66,22 @@ export class UsersComponent {
 
   openEditModal(event: UsersList) {
     console.log(event);
-    this.modalIsOpened = !this.modalIsOpened;
-
     const dialogRef = this.dialog.open(NewUserModalComponent, {
-      data: {},
+      width: '80vw',
+      height: 'auto',
+      maxWidth: '90vw',
+      data: { form: this.newUsersForm },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
+    dialogRef.componentInstance.onSubmit.subscribe((form: FormGroup) => {
+      this.usersApiService.createUser(form.value).subscribe({
+        next: (user: NewUserForm) => {
+          console.log('salvando usuario', user);
+          this.usersApiService.createUser(user);
+          dialogRef.close();
+        },
+        error: (err: Error) => console.error('Erro ao salvar usuário:', err),
+      });
     });
   }
 }

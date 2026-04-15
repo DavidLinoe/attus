@@ -1,15 +1,36 @@
-import { Component} from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, inject } from '@angular/core';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
-export interface DialogData {
-  animal: string;
-  name: string;
-}
+
 @Component({
   selector: 'attus-new-user-modal',
   templateUrl: './newUserModal.component.html',
-  imports: [MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatGridList,
+    MatGridTile,
+  ],
+  styleUrl: './newUserModal.component.css',
 })
-export class NewUserModalComponent {}
+export class NewUserModalComponent {
+  private data = inject<{ form: FormGroup }>(MAT_DIALOG_DATA);
+  newUsersForm = this.data.form;
+
+  onSubmit = new EventEmitter<FormGroup>();
+
+  submit() {
+    if (this.newUsersForm.valid) {
+      this.onSubmit.emit(this.newUsersForm);
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UsersFilter } from '../models/users.models';
+import { NewUserForm, UsersFilter } from '../models/users.models';
 import { ApiService } from '../../../services/apiService.service';
 
 @Injectable()
@@ -8,5 +8,9 @@ export class UsersApi {
 
   getUsers(filters?: UsersFilter) {
     return this.apiService.get('users', filters?.name);
+  }
+
+  createUser(user: NewUserForm) {
+    return this.apiService.post(user);
   }
 }

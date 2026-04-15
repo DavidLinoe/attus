@@ -4,7 +4,7 @@ import { UsersList } from '../pages/users/models/users.models';
 
 @Injectable()
 export class ApiService {
-  public get(url:string, params?: string): Observable<UsersList[]> {
+  public get(url: string, params?: string): Observable<UsersList[]> {
     return new Observable<UsersList[]>((observer) => {
       const filtered = apiUsersResponse.filter((user) =>
         user.name
@@ -17,7 +17,13 @@ export class ApiService {
     });
   }
 
-  public post() {}
+  public post<T>(body: T): Observable<T> {
+    return new Observable<T>((observer) => {
+      apiUsersResponse.push(body as UsersList)
+      observer.next(body);
+      observer.complete();
+    });
+  }
 
   public put() {}
 
