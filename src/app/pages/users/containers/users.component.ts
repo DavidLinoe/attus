@@ -14,7 +14,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject, switchMap } from 'rxjs';
+import { BehaviorSubject, debounceTime, switchMap } from 'rxjs';
 import { ApiService } from '../../../services/apiService.service';
 import { NewUserModalComponent } from '../components/newUserModal/newUserModal.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -56,6 +56,7 @@ export class UsersComponent {
 
     this.navbarState.search
       .pipe(
+        debounceTime(300),
         switchMap((search) => this.usersApiService.getUsers({ name: search })),
         takeUntilDestroyed(),
       )
