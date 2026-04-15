@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { UsersComponent } from './pages/users/containers/users.component';
 import { HomeComponent } from './pages/home/containers/home.component';
+import { PersonComponent } from './pages/person/containers/person.component';
 
 export const routes: Routes = [
   {
@@ -21,7 +22,7 @@ export const routes: Routes = [
   },
   {
     path: 'person',
-    component: UsersComponent,
+    component: PersonComponent,
   },
   {
     path: '**',

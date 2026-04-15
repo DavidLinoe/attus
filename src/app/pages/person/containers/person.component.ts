@@ -1,28 +1,38 @@
-import { ChangeDetectionStrategy, Component, Injectable, OnInit, OnDestroy } from '@angular/core';
-import { of, Subscription } from 'rxjs';
-import { delay } from 'rxjs/operators';
-@Injectable()
-class PessoaService {
-  buscarPorId(id: number) {
-    return of({ id, nome: 'João' }).pipe(delay(500));
-  }
-}
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy } from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { PessoaService } from '../services/person.service';
 @Component({
   selector: 'app-root',
   providers: [PessoaService],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<h1>{{ texto }}</h1>`,
+  templateUrl: './person.component.html',
 })
-export class AppComponent implements OnInit, OnDestroy {
-  texto: string = '';
-  contador = 0;
+export class PersonComponent implements OnInit, OnDestroy {
+  //*exercicio exercicio 2.1
+  public texto: BehaviorSubject<string> = new BehaviorSubject('');
+  private contador = 0;
   private subscriptionBuscarPessoa?: Subscription;
+
   constructor(private readonly pessoaService: PessoaService) {}
+
   ngOnInit(): void {
     this.subscriptionBuscarPessoa = this.pessoaService.buscarPorId(1).subscribe((pessoa) => {
-      this.texto = `Nome: ${pessoa.nome}`;
+      this.texto.next(`Nome: ${pessoa.nome}`);
     });
     setInterval(() => this.contador++, 1000);
+
+    // this.ngOnInit2();
+  }
+
+  //*exercicio  2.2
+  ngOnInit2(): void {
+    // esse nome é apenas para mostrar o mesmo init com o que o exercicio 2.2 pede
+    const pessoaId = 1;
+    this.pessoaService.buscarPorId(pessoaId).subscribe((pessoa) => {
+      this.pessoaService.buscarQuantidadeFamiliares(pessoaId).subscribe((qtd: number) => {
+        this.texto.next(`Nome: ${pessoa.nome} | familiares: ${qtd}`);
+      });
+    });
   }
   ngOnDestroy(): void {}
 }
