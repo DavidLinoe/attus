@@ -26,5 +26,7 @@ export class AppComponent implements OnInit, OnDestroy {
     });
     setInterval(() => this.contador++, 1000);
   }
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+   this.subscriptionBuscarPessoa.unsubscribe();
+  }
 }
