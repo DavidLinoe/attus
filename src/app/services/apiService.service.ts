@@ -19,21 +19,30 @@ export class ApiService {
 
   public post<T>(body: T): Observable<T> {
     return new Observable<T>((observer) => {
-      apiUsersResponse.push(body as UsersList)
       observer.next(body);
       observer.complete();
     });
   }
 
-  public put() {}
+  public put<T extends { id?: number }>(body: T): Observable<T> {
+    return new Observable<T>((observer) => {
+      observer.next(body);
+      observer.complete();
+    });
+  }
 
   public patch() {}
 
-  public delete() {}
+  public delete(id: number): Observable<void> {
+    return new Observable<void>((observer) => {
+      observer.next();
+      observer.complete();
+    });
+  }
 }
 
 const apiUsersResponse: UsersList[] = [
-  { name: 'David Lino', email: 'davidelino290@gmail.com' },
-  { name: 'Giana Sandrini', email: 'giana@attus.com' },
-  { name: 'Jonh Doe ', email: 'jonh@gmail.com' },
+  { id: 1, name: 'David Lino', email: 'davidelino290@gmail.com' },
+  { id: 2, name: 'Giana Sandrini', email: 'giana@attus.com' },
+  { id: 3, name: 'Jonh Doe ', email: 'jonh@gmail.com' },
 ];
