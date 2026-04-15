@@ -1,53 +1,46 @@
 <div class="form">
+  <h3 class="modal-title">Adicionar novo usuário</h3>
+
   <form [formGroup]="newUsersForm">
-    <mat-grid-list cols="4" rowHeight="100px">
-      <mat-grid-tile colspan="4">
-        <mat-form-field class="form-field" [floatLabel]="'always'">
-          <mat-label>Nome</mat-label>
-          <input formControlName="name" type="text" matInput placeholder="David Eduardo Lino" />
-        </mat-form-field>
-      </mat-grid-tile>
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Usuário (e-mail) *</mat-label>
+      <input formControlName="email" type="email" matInput />
+    </mat-form-field>
 
-      <mat-grid-tile colspan="4">
-        <mat-form-field class="form-field">
-          <mat-label>Email</mat-label>
-          <input formControlName="email" type="email" matInput placeholder="david@exemplo.com" />
-        </mat-form-field>
-      </mat-grid-tile>
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Nome completo *</mat-label>
+      <input formControlName="name" type="text" matInput />
+    </mat-form-field>
 
-      <mat-grid-tile colspan="2">
-        <mat-form-field class="form-field">
-          <mat-label>CPF</mat-label>
-          <input formControlName="cpf" type="text" matInput placeholder="000.000.000-00" />
-        </mat-form-field>
-      </mat-grid-tile>
+    <div class="row-fields">
+      <mat-form-field appearance="outline">
+        <mat-label>CPF *</mat-label>
+        <input formControlName="cpf" type="text" matInput placeholder="000.000.000-00" />
+      </mat-form-field>
 
-      <mat-grid-tile colspan="1">
-        <mat-form-field class="form-field">
-          <mat-label>Celular</mat-label>
-          <input formControlName="phone" type="text" matInput placeholder="999999999999" />
-        </mat-form-field>
-      </mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Número do telefone *</mat-label>
+        <input formControlName="phone" type="text" matInput />
+      </mat-form-field>
 
-      <mat-grid-tile colspan="1">
-        <mat-form-field class="form-field">
-          <mat-label>Tipo</mat-label>
-          <select formControlName="phoneType" matNativeControl required>
-            <option value="celphone">Celular</option>
-            <option value="telephone">Telefone</option>
-          </select>
-        </mat-form-field>
-      </mat-grid-tile>
-    </mat-grid-list>
+      <mat-form-field appearance="outline">
+        <select formControlName="phoneType" matNativeControl required>
+          <option value="celphone">CELULAR</option>
+          <option value="telephone">TELEFONE</option>
+        </select>
+      </mat-form-field>
+    </div>
+
+    <p class="sms-info">O usuário receberá uma senha provisória para acesso ao sistema por SMS.</p>
   </form>
 
   <button
     mat-raised-button
-    [matButton]="'tonal'"
+    color="primary"
     type="button"
     (click)="submit()"
     [disabled]="newUsersForm.invalid"
   >
-    Salvar
+    SALVAR
   </button>
 </div>

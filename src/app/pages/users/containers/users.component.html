@@ -1,10 +1,13 @@
-<attus-users-list
-  (openEditModal)="openUserModal($event)"
-  [users]="(users$ | async) ?? []"
-></attus-users-list>
+<div class="page-background">
+  <div class="content">
+    <p class="section-title">Usuários cadastrados</p>
+    <attus-users-list
+      (openEditModal)="openUserModal($event)"
+      [users]="(users$ | async) ?? []"
+    ></attus-users-list>
+  </div>
 
-<div (click)="openUserModal()" class="add-button">
-  <button matFab>
+  <button (click)="openUserModal()" class="add-button" matFab>
     <mat-icon>add</mat-icon>
   </button>
 </div>
