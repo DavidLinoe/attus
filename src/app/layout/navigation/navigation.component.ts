@@ -21,6 +21,7 @@ export class NavigationComponent {
 
   constructor() {}
 
- 
-
+  onSearch(text: string) {
+    console.log(text);
+  }
 }

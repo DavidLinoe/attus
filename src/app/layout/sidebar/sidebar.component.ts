@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatList, MatListItem } from '@angular/material/list';
 import { Router } from '@angular/router';
-import { NavigationState } from '../navbar/navbar.state';
+import { NavbarState } from '../navbar/navbar.state';
 export interface SideUrls {
   label: string;
   url: string;
@@ -37,11 +37,11 @@ export class SidebarComponent implements OnInit {
   
   constructor(
     public router: Router,
-    public navigationState: NavigationState,
+    public navbarState: NavbarState,
   ) {}
 
   ngOnInit(): void {
-    this.navigationState.navbarHeader.next(
+    this.navbarState.navbarHeader.next(
       this.sideUrls.find((url) => url.url === this.router.url)?.url || '',
     );
   }

@@ -6,10 +6,8 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatInputModule } from '@angular/material/input';
-import { Observable } from 'rxjs';
-import { SideUrls } from '../sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
-import { NavigationState } from './navbar.state';
+import { NavbarState } from './navbar.state';
 
 @Component({
   selector: 'attus-navbar',
@@ -30,15 +28,16 @@ export class NavbarComponent {
   public filterUsersForm!: FormGroup;
   public onSideBarToggle = output<boolean>();
   public activePage = input<string>();
+  public onSearch = output<string>();
 
   constructor(
     private formBuilder: FormBuilder,
-    public navigationState: NavigationState,
+    public navbarState: NavbarState,
   ) {
     this.filterUsersForm = this.formBuilder.group({
-      name: '',
+      search: '',
     });
 
-    this.filterUsersForm.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => null);
+    this.filterUsersForm.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => this.onSearch.emit(value.search));
   }
 }
