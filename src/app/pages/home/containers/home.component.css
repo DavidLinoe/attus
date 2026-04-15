@@ -1,0 +1,13 @@
+p {
+  text-align: center;
+  font-size: xx-large;
+  font-weight: 800;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  padding: 10px;
+  line-height: 50px;
+}
+ul {
+  font-size: x-large;
+  list-style-type: disc;
+  line-height: 30px;
+}

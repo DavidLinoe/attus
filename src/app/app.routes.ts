@@ -1,10 +1,11 @@
 import { Routes } from '@angular/router';
 import { UsersComponent } from './pages/users/containers/users.component';
+import { HomeComponent } from './pages/home/containers/home.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: UsersComponent,
+    component: HomeComponent,
   },
   {
     path: 'users',
