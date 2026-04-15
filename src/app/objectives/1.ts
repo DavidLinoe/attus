@@ -1,15 +1,16 @@
 class Produto {
-  id: any;
-  descricao: any;
-  quantidadeEstoque: any;
-  constructor(id: any, descricao: any, quantidadeEstoque: any) {
+  id: number;
+  descricao: string;
+  quantidadeEstoque: number;
+
+  constructor(id: number, descricao: string, quantidadeEstoque: number) {
     this.id = id;
     this.descricao = descricao;
     this.quantidadeEstoque = quantidadeEstoque;
   }
 }
 class Verdureira {
-  produtos: any;
+  produtos: Produto[];
   constructor() {
     this.produtos = [
       new Produto(1, 'Maçã', 20),
@@ -17,26 +18,14 @@ class Verdureira {
       new Produto(3, 'Limão', 20),
     ];
   }
-  getDescricaoProduto(produtoId: any) {
-    let produto;
-    for (let index = 0; index < this.produtos.length; index++) {
-      if (this.produtos[index].id == produtoId) {
-        produto = this.produtos[index];
-      }
-    }
-    return produto.id + ' - ' + produto.descricao + ' (' + produto.quantidadeEstoque + 'x)';
+
+  getDescricaoProduto(produtoId: number): string {
+    const produto = this.produtos.find((produto) => produto.id === produtoId);
+    return `${produto?.id} - ${produto?.descricao}`;
   }
-  hasEstoqueProduto(produtoId: any) {
-    let produto;
-    for (let index = 0; index < this.produtos.length; index++) {
-      if (this.produtos[index].id == produtoId) {
-        produto = this.produtos[index];
-      }
-    }
-    if (produto.quantidadeEstoque > 0) {
-      return true;
-    } else {
-      return false;
-    }
+
+  hasEstoqueProduto(produtoId: number): boolean {
+    const produto = this.produtos.find((produto) => produto.id === produtoId);
+    return produto?.quantidadeEstoque ? produto?.quantidadeEstoque >= 1 : false;
   }
 }
