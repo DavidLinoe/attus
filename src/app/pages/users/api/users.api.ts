@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NewUserForm, UsersFilter } from '../models/users.models';
 import { ApiService } from '../../../services/apiService.service';
-import { Observable } from 'rxjs';
 
 @Injectable()
 export class UsersApi {
