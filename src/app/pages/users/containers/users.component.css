@@ -1,6 +1,26 @@
+.page-background {
+  background-color: #ebebeb;
+  min-height: calc(100vh - 64px);
+}
+
+.content {
+  padding: 1.5rem 2rem;
+}
+
+.section-title {
+  font-size: 0.85rem;
+  color: #757575;
+  margin: 0 0 0.5rem 0;
+}
+
 .add-button {
   position: fixed;
   z-index: 1;
+  padding: 10px;
+  border-radius: 100%;
+  background-color: rgb(165, 8, 8);
   bottom: 20px;
+  color: white;
+  border-color: #5c0707;
   right: 20px;
 }
