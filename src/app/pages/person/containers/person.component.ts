@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { PessoaService } from '../services/person.service';
 @Component({
@@ -6,6 +7,7 @@ import { PessoaService } from '../services/person.service';
   providers: [PessoaService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './person.component.html',
+  imports: [CommonModule],
 })
 export class PersonComponent implements OnInit, OnDestroy {
   //*exercicio exercicio 2.1
