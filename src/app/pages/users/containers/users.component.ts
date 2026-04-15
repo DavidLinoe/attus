@@ -20,6 +20,7 @@ import { NewUserModalComponent } from '../components/newUserModal/newUserModal.c
 import { MatDialog } from '@angular/material/dialog';
 import { NavbarState } from '../../../layout/navbar/navbar.state';
 
+//*exercicio 4
 @Component({
   templateUrl: './users.component.html',
   imports: [
