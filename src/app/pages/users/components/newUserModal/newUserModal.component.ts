@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NewUserForm } from '../../models/users.models';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -26,11 +27,11 @@ export class NewUserModalComponent {
   private data = inject<{ form: FormGroup }>(MAT_DIALOG_DATA);
   newUsersForm = this.data.form;
 
-  onSubmit = new EventEmitter<FormGroup>();
+  onSubmit = new EventEmitter<NewUserForm>();
 
   submit() {
     if (this.newUsersForm.valid) {
-      this.onSubmit.emit(this.newUsersForm);
+      this.onSubmit.emit(this.newUsersForm.value);
     }
   }
 }
