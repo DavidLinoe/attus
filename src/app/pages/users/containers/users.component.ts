@@ -14,7 +14,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { switchMap } from 'rxjs';
+import { BehaviorSubject, switchMap } from 'rxjs';
 import { ApiService } from '../../../services/apiService.service';
 import { NewUserModalComponent } from '../components/newUserModal/newUserModal.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -30,13 +30,15 @@ import { MatDialog } from '@angular/material/dialog';
     MatFormFieldModule,
     MatInputModule,
   ],
+  styleUrl: './users.component.css',
   providers: [ApiService, UsersApi],
 })
 export class UsersComponent {
   public filterUsersForm!: FormGroup;
   public newUsersForm!: FormGroup;
   readonly dialog = inject(MatDialog);
-  public users: UsersList[] = [];
+  public users = new BehaviorSubject<UsersList[]>([]);
+  public users$ = this.users.asObservable();
 
   constructor(
     private usersApiService: UsersApi,
@@ -47,6 +49,7 @@ export class UsersComponent {
     });
 
     this.newUsersForm = this.formBuilder.group({
+      id: [''],
       name: ['', [Validators.required]],
       email: ['', [Validators.required]],
       phone: ['', [Validators.required]],
@@ -59,13 +62,16 @@ export class UsersComponent {
         switchMap((filter: UsersFilter) => this.usersApiService.getUsers(filter)),
         takeUntilDestroyed(),
       )
-      .subscribe((users) => (this.users = users));
+      .subscribe((users) => this.users.next(users));
 
     this.filterUsersForm.enable();
   }
 
-  openEditModal(event: UsersList) {
-    console.log(event);
+  openUserModal(event?: UsersList) {
+    if (event) {
+      this.newUsersForm.patchValue(event);
+    }
+
     const dialogRef = this.dialog.open(NewUserModalComponent, {
       width: '80vw',
       height: 'auto',
@@ -73,15 +79,22 @@ export class UsersComponent {
       data: { form: this.newUsersForm },
     });
 
-    dialogRef.componentInstance.onSubmit.subscribe((form: FormGroup) => {
-      this.usersApiService.createUser(form.value).subscribe({
-        next: (user: NewUserForm) => {
-          console.log('salvando usuario', user);
-          this.usersApiService.createUser(user);
+    if (event && event.id) {
+      dialogRef.componentInstance.onSubmit.subscribe((user: NewUserForm) => {
+        this.usersApiService.updateUser(user).subscribe((res) => {
+          this.users.next(this.users.value.map((u) => (u.id === res.id ? { ...u, ...res } : u)));
           dialogRef.close();
-        },
-        error: (err: Error) => console.error('Erro ao salvar usuário:', err),
+          this.newUsersForm.reset();
+        });
       });
-    });
+    } else {
+      dialogRef.componentInstance.onSubmit.subscribe((user: NewUserForm) => {
+        this.usersApiService.createUser(user).subscribe((res) => {
+          this.users.next([...this.users.value, { id: res.id!, name: res.name, email: res.email }]);
+          dialogRef.close();
+          this.newUsersForm.reset();
+        });
+      });
+    }
   }
 }

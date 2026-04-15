@@ -1,4 +1,5 @@
 export interface UsersList {
+  id:number;
   name: string;
   email: string;
 }
@@ -8,6 +9,7 @@ export interface UsersFilter {
 }
 
 export interface NewUserForm {
+  id?:number;
   name: string;
   email: string;
   cpf: string;
