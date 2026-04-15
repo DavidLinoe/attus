@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { SidebarComponent, SideUrls } from '../sidebar/sidebar.component';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { NavbarComponent } from '../../navbar/navbar.component';
 import { MatDrawer, MatDrawerContainer, MatDrawerContent } from '@angular/material/sidenav';
-import { NavbarState } from '../navbar/navbar.state';
-import { SIDE_URLS } from './models/navigation.models';
+import { NavbarState } from '../../navbar/navbar.state';
 import { distinct, filter, Subscription,} from 'rxjs';
+import { SidebarComponent, SideUrls } from '../../sidebar/sidebar.component';
+import { SIDE_URLS } from '../models/navigation.models';
 
 @Component({
   selector: 'attus-navigation',
