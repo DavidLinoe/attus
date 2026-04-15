@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, concat, forkJoin, merge, Subscription } from 'rxjs';
 import { PessoaService } from '../services/person.service';
 @Component({
   selector: 'app-root',
@@ -32,10 +32,11 @@ export class PersonComponent implements OnInit, OnDestroy {
   ngOnInit2(): void {
     // esse nome é apenas para mostrar o mesmo init com o que o exercicio 2.2 pede
     const pessoaId = 1;
-    this.pessoaService.buscarPorId(pessoaId).subscribe((pessoa) => {
-      this.pessoaService.buscarQuantidadeFamiliares(pessoaId).subscribe((qtd: number) => {
-        this.texto2.next(`Nome: ${pessoa.nome} | familiares: ${qtd}`);
-      });
+    const pessoa$ = this.pessoaService.buscarPorId(pessoaId);
+    const quantidadeFamiliares$ = this.pessoaService.buscarQuantidadeFamiliares(pessoaId);
+    forkJoin([pessoa$, quantidadeFamiliares$]).subscribe(([pessoa, qtdFamiliares]) => {
+      this.texto2.next(`Nome: ${pessoa.nome} | familiares: ${qtdFamiliares}`);
+      console.log([pessoa, qtdFamiliares]);
     });
   }
   ngOnDestroy(): void {}
