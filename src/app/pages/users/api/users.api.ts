@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NewUserForm, UsersFilter } from '../models/users.models';
 import { ApiService } from '../../../services/apiService.service';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class UsersApi {
@@ -12,5 +13,13 @@ export class UsersApi {
 
   createUser(user: NewUserForm) {
     return this.apiService.post(user);
+  }
+
+  updateUser(user: NewUserForm) {
+    return this.apiService.put(user);
+  }
+
+  deleteUser(id: number) {
+    return this.apiService.delete(id);
   }
 }
