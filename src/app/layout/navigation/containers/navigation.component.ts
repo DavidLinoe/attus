@@ -29,10 +29,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
     public navbarState: NavbarState,
   ) {}
 
-  onSearch(text: string) {
-    console.log(text);
-  }
-
   ngOnInit() {
     this.routerSubscription = this.router.events
       .pipe(

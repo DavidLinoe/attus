@@ -30,7 +30,6 @@ import { NavbarState } from './navbar.state';
 export class NavbarComponent {
   public filterUsersForm!: FormGroup;
   public onSideBarToggle = output<boolean>();
-  public onSearch = output<string>();
 
   constructor(
     private formBuilder: FormBuilder,
