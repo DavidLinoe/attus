@@ -38,6 +38,6 @@ export class NavbarComponent {
       search: '',
     });
 
-    this.filterUsersForm.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => this.onSearch.emit(value.search));
+    this.filterUsersForm.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => this.navbarState.search.next(value.search));
   }
 }

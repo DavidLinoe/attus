@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UsersListComponent } from '../components/usersList/usersList.component';
-import { NewUserForm, UsersFilter, UsersList } from '../models/users.models';
+import { NewUserForm, UsersList } from '../models/users.models';
 import { UsersApi } from '../api/users.api';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,6 +18,7 @@ import { BehaviorSubject, switchMap } from 'rxjs';
 import { ApiService } from '../../../services/apiService.service';
 import { NewUserModalComponent } from '../components/newUserModal/newUserModal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { NavbarState } from '../../../layout/navbar/navbar.state';
 
 @Component({
   templateUrl: './users.component.html',
@@ -34,7 +35,6 @@ import { MatDialog } from '@angular/material/dialog';
   providers: [ApiService, UsersApi],
 })
 export class UsersComponent {
-  public filterUsersForm!: FormGroup;
   public newUsersForm!: FormGroup;
   readonly dialog = inject(MatDialog);
   public users = new BehaviorSubject<UsersList[]>([]);
@@ -43,11 +43,8 @@ export class UsersComponent {
   constructor(
     private usersApiService: UsersApi,
     private formBuilder: FormBuilder,
+    private navbarState: NavbarState,
   ) {
-    this.filterUsersForm = this.formBuilder.group({
-      name: '',
-    });
-
     this.newUsersForm = this.formBuilder.group({
       id: [''],
       name: ['', [Validators.required]],
@@ -57,14 +54,12 @@ export class UsersComponent {
       phoneType: ['', [Validators.required]],
     });
 
-    this.filterUsersForm.valueChanges
+    this.navbarState.search
       .pipe(
-        switchMap((filter: UsersFilter) => this.usersApiService.getUsers(filter)),
+        switchMap((search) => this.usersApiService.getUsers({ name: search })),
         takeUntilDestroyed(),
       )
       .subscribe((users) => this.users.next(users));
-
-    this.filterUsersForm.enable();
   }
 
   openUserModal(event?: UsersList) {

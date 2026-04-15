@@ -34,7 +34,7 @@ export class SidebarComponent implements OnInit {
       url: '/todo',
     },
   ];
-  
+
   constructor(
     public router: Router,
     public navbarState: NavbarState,
