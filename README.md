@@ -8,5 +8,5 @@
 
  npm run start
 
- 
+ # para verificar cada exercicio pesquise por: //*exercicio
  
