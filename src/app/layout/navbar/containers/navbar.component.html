@@ -3,7 +3,7 @@
     <button mat-icon-button (click)="onSideBarToggle.emit(true)">
       <mat-icon class="icon">menu</mat-icon>
     </button>
-    <span class="title">{{ navbarState.navbarHeader.value }}</span>
+    <span class="title">{{ navbarStore.navbarHeader.value }}</span>
   </div>
 
   <form [formGroup]="filterUsersForm" class="search- form">
