@@ -1,5 +1,14 @@
-//*exercicio 1.1
+export interface Pagina<T> {
+  itens: T[];
+  total: number;
+}
 
+export interface PaginaParams {
+  pagina: number;
+  tamanho: number;
+}
+
+//*exercicio 1.1
 class Produto {
   id: number;
   descricao: string;
@@ -11,7 +20,7 @@ class Produto {
     this.quantidadeEstoque = quantidadeEstoque;
   }
 }
-class Verdureira {
+export class Verdureira {
   produtos: Produto[];
   constructor() {
     this.produtos = [
@@ -30,4 +39,14 @@ class Verdureira {
     const produto = this.produtos.find((produto) => produto.id === produtoId);
     return produto?.quantidadeEstoque ? produto?.quantidadeEstoque >= 1 : false;
   }
+
+  //*exercicio 1.2
+  filtrarEPaginar<T>(data: T[], filterFn: (item: T) => boolean, params: PaginaParams): Pagina<T> {
+    const filtrados = data.filter(filterFn);
+    const inicio = (params.pagina - 1) * params.tamanho;
+    const itens = filtrados.slice(inicio, inicio + params.tamanho);
+    return { itens, total: filtrados.length };
+  }
+
 }
+
