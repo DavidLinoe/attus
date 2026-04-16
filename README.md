@@ -4,9 +4,12 @@
 
 # para rodar :
 
- npm i
+npm i
 
- npm run start
+npm run start
 
  # para verificar cada exercicio pesquise por: //*exercicio
- 
+
+# para rodar os testes:
+
+npm run test
