@@ -5,6 +5,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TodoFacade } from '../facades/todo.facade';
 import { Todo } from '../models/todo.models';
 
+//*exercicio 3.2
 @Component({
   templateUrl: './todo.component.html',
   imports: [AsyncPipe, MatCheckboxModule, MatProgressSpinnerModule],
