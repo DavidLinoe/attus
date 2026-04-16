@@ -1,0 +1,14 @@
+
+//*exercicio 2.4
+
+@for para renderizar listas grandes
+
+o angular, por padrão, identifica itens pelo seu índice
+ Se a lista mudar adicionar, remover ou reordenar itens
+ o angular pode destruir e recriar DOM desnecessariamente
+ mesmo para itens que não mudaram
+
+O trackBy permite informar ao angular como identificar cada item de forma unica
+ assim, apenas os itens realmente alterados são atualizados no DOMmelhorando a performance
+
+assim, apenas os itens realmente alterados são atualizados no DOM, melhorando a performance
