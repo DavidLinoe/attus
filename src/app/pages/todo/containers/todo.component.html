@@ -1,0 +1,19 @@
+<div class="page-background">
+  <p class="section-title">Lista de Tarefas</p>
+
+  @if (todoFacade.loading$ | async) {
+    <mat-spinner diameter="40" />
+  }
+
+  @if (todoFacade.error$ | async; as error) {
+    <p>{{ error }}</p>
+  }
+
+  @for (todo of todoFacade.todos$ | async; track todo.id) {
+    <div>
+      <mat-checkbox [checked]="todo.completed" (change)="toggle(todo.id)">
+        {{ todo.title }}
+      </mat-checkbox>
+    </div>
+  }
+</div>
