@@ -14,7 +14,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject, debounceTime, switchMap } from 'rxjs';
+import { BehaviorSubject, catchError, debounceTime, of, switchMap, tap } from 'rxjs';
 import { ApiService } from '../../../services/apiService.service';
 import { NewUserModalComponent } from '../components/newUserModal/newUserModal.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -40,6 +40,8 @@ export class UsersComponent {
   readonly dialog = inject(MatDialog);
   public users = new BehaviorSubject<UsersList[]>([]);
   public users$ = this.users.asObservable();
+  public loading = new BehaviorSubject<boolean>(false);
+  public error = new BehaviorSubject<string | null>(null);
 
   constructor(
     private usersApiService: UsersApi,
@@ -58,7 +60,16 @@ export class UsersComponent {
     this.navbarState.search
       .pipe(
         debounceTime(300),
-        switchMap((search) => this.usersApiService.getUsers({ name: search })),
+        tap(() => this.loading.next(true)),
+        switchMap((search) =>
+          this.usersApiService.getUsers({ name: search }).pipe(
+            catchError((err) => {
+              this.error.next('Erro ao carregar usuários');
+              return of([]);
+            }),
+          ),
+        ),
+        tap(() => this.loading.next(false)),
         takeUntilDestroyed(),
       )
       .subscribe((users) => this.users.next(users));
