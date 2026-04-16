@@ -1,4 +1,4 @@
-import { SideUrls } from '../../sidebar/sidebar.component';
+import { SideUrls } from "../../sidebar/containers/sidebar.component";
 
 export const SIDE_URLS: SideUrls[] = [
   {
