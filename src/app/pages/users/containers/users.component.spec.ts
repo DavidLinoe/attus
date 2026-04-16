@@ -33,7 +33,7 @@ describe('UsersComponent', () => {
     // Para substituir com mocks, usamos overrideComponent.
     await TestBed.configureTestingModule({
       imports: [UsersComponent],
-      providers: [provideAnimations(), navbarStore],
+      providers: [provideAnimations(), NavbarStore],
     })
       .overrideComponent(UsersComponent, {
         set: {
