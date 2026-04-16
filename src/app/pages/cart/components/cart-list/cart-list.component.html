@@ -1,7 +1,21 @@
-{{ count() }}
+<button (click)="getAll()" [disabled]="loading()">Listar todos</button>
 
-@for (item of list(); track $index) {
-  <div class="list">
-    {{ item.name }}
+@if (loading()) {
+  <div class="loading-overlay">
+    <div class="spinner"></div>
+    <span>Carregando itens...</span>
   </div>
+} @else {
+  @for (item of list(); track item.name) {
+    <div class="list">
+      {{ item.name }} — {{ item.amount }} × R$ {{ item.price | number: '1.2-2' }}
+      <button (click)="removeItem(item)">Remover</button>
+    </div>
+  }
+
+  @if (list().length > 0) {
+    <p>
+      <strong>Total: R$ {{ total() | number: '1.2-2' }}</strong>
+    </p>
+  }
 }

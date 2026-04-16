@@ -1,40 +1,49 @@
-import { CommonModule } from '@angular/common';
-import { Component, computed, input, output, signal } from '@angular/core';
-
-interface CartItem {
-  name: string;
-  price: number;
-  amount: number;
-}
+import { DecimalPipe } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  output,
+  signal,
+} from '@angular/core';
+import { CartItem, MOCK_ITEMS_CART } from '../../models/cart.models';
 
 @Component({
   selector: 'attus-cart-list',
   templateUrl: './cart-list.component.html',
-  imports: [CommonModule],
+  imports: [DecimalPipe],
   styleUrl: './cart-list.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartListComponent {
-  public total = output<number>();
+  public totalChange = output<number>();
+  public list = signal<CartItem[]>([]);
+  public loading = signal<boolean>(false);
 
-  public count = signal<number>(0);
-  public list = signal<CartItem[]>([{ name: 'Item 1', price: 10, amount: 10 }]);
-  public computed = signal<number>(0);
+  public total = computed(() =>
+    this.list().reduce((sum, item) => sum + item.amount * item.price, 0),
+  );
 
-  addCount() {
-    this.count.set(this.count() + 1);
+  constructor() {
+    effect(() => {
+      this.totalChange.emit(this.total());
+    });
+  }
+
+  getAll() {
+    this.loading.set(true);
+    setTimeout(() => {
+      this.list.set(MOCK_ITEMS_CART);
+      this.loading.set(false);
+    }, 800);
   }
 
   addItem(item: CartItem) {
-    this.list.set([...this.list(), { ...item }]);
+    this.list.update((current) => [...current, { ...item }]);
   }
 
-  removeItem(item: CartItem) {
-    this.list.set([...this.list(), { ...item }]);
+  removeItem(itemToRemove: CartItem) {
+    this.list.update((current) => current.filter((item) => item.name !== itemToRemove.name));
   }
-
-  public conditionalCount = computed(() => {
-    return this.list().map((item: CartItem) => {
-      item.amount * item.price;
-    });
-  });
 }
