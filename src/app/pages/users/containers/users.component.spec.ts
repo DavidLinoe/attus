@@ -3,7 +3,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { UsersComponent } from './users.component';
 import { UsersApi } from '../api/users.api';
 import { ApiService } from '../../../services/apiService.service';
-import { NavbarState } from '../../../layout/navbar/navbar.state';
+import { NavbarStore } from '../../../layout/navbar/store/navbar.store';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { Subject, of } from 'rxjs';
@@ -18,7 +18,7 @@ describe('UsersComponent', () => {
   let fixture: ComponentFixture<UsersComponent>;
   let component: UsersComponent;
   let usersApiMock: Partial<UsersApi>;
-  let navbarState: NavbarState;
+  let navbarStore: NavbarStore;
   let dialog: MatDialog;
 
   beforeEach(async () => {
@@ -33,7 +33,7 @@ describe('UsersComponent', () => {
     // Para substituir com mocks, usamos overrideComponent.
     await TestBed.configureTestingModule({
       imports: [UsersComponent],
-      providers: [provideAnimations(), NavbarState],
+      providers: [provideAnimations(), navbarStore],
     })
       .overrideComponent(UsersComponent, {
         set: {
@@ -50,7 +50,7 @@ describe('UsersComponent', () => {
 
     fixture = TestBed.createComponent(UsersComponent);
     component = fixture.componentInstance;
-    navbarState = TestBed.inject(NavbarState);
+    navbarStore = TestBed.inject(NavbarStore);
     dialog = TestBed.inject(MatDialog);
     fixture.detectChanges();
   });
@@ -72,8 +72,8 @@ describe('UsersComponent', () => {
     expect(form.contains('phoneType')).toBe(true);
   });
 
-  it('deve chamar getUsers ao navbarState emitir novo valor de busca', () => {
-    navbarState.search.next('David');
+  it('deve chamar getUsers ao navbarStore emitir novo valor de busca', () => {
+    navbarStore.search.next('David');
     vi.advanceTimersByTime(300);
 
     expect(usersApiMock.getUsers).toHaveBeenCalledWith({ name: 'David' });
@@ -83,7 +83,7 @@ describe('UsersComponent', () => {
     const usuariosFiltrados: UsersList[] = [{ id: 1, name: 'David Lino', email: 'david@email.com' }];
     vi.mocked(usersApiMock.getUsers!).mockReturnValue(of(usuariosFiltrados));
 
-    navbarState.search.next('David');
+    navbarStore.search.next('David');
     vi.advanceTimersByTime(300);
 
     component.users$.subscribe((users) => {
