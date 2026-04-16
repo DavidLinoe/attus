@@ -1,5 +1,7 @@
 {{ count() }}
 
-
-
-
+@for (item of list(); track $index) {
+  <div class="list">
+    {{ item.name }}
+  </div>
+}

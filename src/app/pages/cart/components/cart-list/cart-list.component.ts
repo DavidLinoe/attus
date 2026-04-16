@@ -11,12 +11,13 @@ interface CartItem {
   selector: 'attus-cart-list',
   templateUrl: './cart-list.component.html',
   imports: [CommonModule],
+  styleUrl: './cart-list.component.css',
 })
 export class CartListComponent {
   public total = output<number>();
 
   public count = signal<number>(0);
-  public list = signal<CartItem[]>([{ name: '', price: 0, amount: 0 }]);
+  public list = signal<CartItem[]>([{ name: 'Item 1', price: 10, amount: 10 }]);
   public computed = signal<number>(0);
 
   addCount() {
