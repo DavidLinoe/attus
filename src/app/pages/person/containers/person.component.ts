@@ -39,5 +39,7 @@ export class PersonComponent implements OnInit, OnDestroy {
       console.log([pessoa, qtdFamiliares]);
     });
   }
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.subscriptionBuscarPessoa?.unsubscribe();
+  }
 }
