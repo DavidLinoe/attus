@@ -39,6 +39,7 @@ export class NavbarComponent {
     });
 
     this.filterUsersForm.valueChanges
+      //*exercicio 4.2
       .pipe(takeUntilDestroyed())
       .subscribe((value) => this.navbarStore.search.next(value.search));
   }

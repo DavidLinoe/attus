@@ -49,6 +49,8 @@ export class UsersComponent {
     private navbarStore: NavbarStore,
   ) {
     this.newUsersForm = this.formBuilder.group({
+      //*exercicio 4.3
+
       id: [''],
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
@@ -56,20 +58,24 @@ export class UsersComponent {
       phone: ['', [Validators.required, Validators.pattern(/^\(\d{2}\)\s\d{4,5}-\d{4}$/)]],
       phoneType: ['', [Validators.required]],
     });
-
+    //*exercicio 2.3
     this.navbarStore.search
       .pipe(
+        //*exercicio 4.2
         debounceTime(300),
         tap(() => this.loading.next(true)),
         switchMap((search) =>
           this.usersApiService.getUsers({ name: search }).pipe(
+            //*exercicio 4.2
             catchError((err) => {
               this.error.next('Erro ao carregar usuários');
               return of([]);
             }),
           ),
         ),
+        //*exercicio 4.2
         tap(() => this.loading.next(false)),
+        //*exercicio 4.2
         takeUntilDestroyed(),
       )
       .subscribe((users) => this.users.next(users));

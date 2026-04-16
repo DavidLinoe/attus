@@ -34,6 +34,7 @@ export class PersonComponent implements OnInit, OnDestroy {
     const pessoaId = 1;
     const pessoa$ = this.pessoaService.buscarPorId(pessoaId);
     const quantidadeFamiliares$ = this.pessoaService.buscarQuantidadeFamiliares(pessoaId);
+    //*exercicio 4.2
     forkJoin([pessoa$, quantidadeFamiliares$]).subscribe(([pessoa, qtdFamiliares]) => {
       this.texto2.next(`Nome: ${pessoa.nome} | familiares: ${qtdFamiliares}`);
       console.log([pessoa, qtdFamiliares]);
