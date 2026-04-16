@@ -14,7 +14,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject, catchError, debounceTime, of, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, catchError, debounceTime, of, switchMap, take, tap } from 'rxjs';
 import { ApiService } from '../../../services/apiService.service';
 import { NewUserModalComponent } from '../components/newUserModal/newUserModal.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -93,22 +93,23 @@ export class UsersComponent {
       data: { form: this.newUsersForm },
     });
 
-    if (event && event.id) {
-      dialogRef.componentInstance.onSubmit.subscribe((user: NewUserForm) => {
-        this.usersApiService.updateUser(user).subscribe((res) => {
+    const isEdit = !!(event && event.id);
+
+    dialogRef.componentInstance.onSubmit
+      .pipe(
+        take(1),
+        switchMap((user: NewUserForm) =>
+          isEdit ? this.usersApiService.updateUser(user) : this.usersApiService.createUser(user),
+        ),
+      )
+      .subscribe((res) => {
+        if (isEdit) {
           this.users.next(this.users.value.map((u) => (u.id === res.id ? { ...u, ...res } : u)));
-          dialogRef.close();
-          this.newUsersForm.reset();
-        });
-      });
-    } else {
-      dialogRef.componentInstance.onSubmit.subscribe((user: NewUserForm) => {
-        this.usersApiService.createUser(user).subscribe((res) => {
+        } else {
           this.users.next([...this.users.value, { id: res.id!, name: res.name, email: res.email }]);
-          dialogRef.close();
-          this.newUsersForm.reset();
-        });
+        }
+        dialogRef.close();
+        this.newUsersForm.reset();
       });
-    }
   }
 }
