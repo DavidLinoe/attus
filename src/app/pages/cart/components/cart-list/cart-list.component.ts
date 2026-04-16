@@ -1,4 +1,5 @@
 import { DecimalPipe } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -12,11 +13,12 @@ import { CartItem, MOCK_ITEMS_CART } from '../../models/cart.models';
 @Component({
   selector: 'attus-cart-list',
   templateUrl: './cart-list.component.html',
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, MatProgressSpinnerModule],
   styleUrl: './cart-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartListComponent {
+  //*exercicio 3.1
   public totalChange = output<number>();
   public list = signal<CartItem[]>([]);
   public loading = signal<boolean>(false);

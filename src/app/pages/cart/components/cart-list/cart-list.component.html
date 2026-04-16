@@ -2,13 +2,15 @@
 
 @if (loading()) {
   <div class="loading-overlay">
-    <div class="spinner"></div>
-    <span>Carregando itens...</span>
+    <mat-spinner diameter="36" />
+    <span>Carregando</span>
   </div>
 } @else {
+  <!-- //*exercicio 2.4-->
+
   @for (item of list(); track item.name) {
     <div class="list">
-      {{ item.name }} — {{ item.amount }} × R$ {{ item.price | number: '1.2-2' }}
+      {{ item.name }} — {{ item.amount }} * R$ {{ item.price | number: '1.2-2' }}
       <button (click)="removeItem(item)">Remover</button>
     </div>
   }
