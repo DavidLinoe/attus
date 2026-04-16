@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { NavbarComponent } from '../../navbar/navbar.component';
+import { NavbarComponent } from '../../navbar/containers/navbar.component';
 import { MatDrawer, MatDrawerContainer, MatDrawerContent } from '@angular/material/sidenav';
-import { NavbarState } from '../../navbar/navbar.state';
-import { distinct, filter, Subscription,} from 'rxjs';
-import { SidebarComponent, SideUrls } from '../../sidebar/sidebar.component';
+import { NavbarStore } from '../../navbar/store/navbar.store';
+import { distinct, filter, Subscription } from 'rxjs';
+import { SidebarComponent, SideUrls } from '../../sidebar/containers/sidebar.component';
 import { SIDE_URLS } from '../models/navigation.models';
 
 @Component({
@@ -26,7 +26,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   constructor(
     public router: Router,
-    public navbarState: NavbarState,
+    public navbarStore: NavbarStore,
   ) {}
 
   ngOnInit() {
@@ -37,7 +37,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
       )
       .subscribe((route) => {
         console.log(route);
-        this.navbarState.navbarHeader.next(
+        this.navbarStore.navbarHeader.next(
           this.sideUrls.find((url) => url.url === route.url)?.label || '',
         );
       });

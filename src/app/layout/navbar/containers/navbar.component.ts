@@ -4,12 +4,11 @@ import { MatFormField, MatPrefix } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
-import { NavbarState } from './navbar.state';
+import { NavbarStore } from '../store/navbar.store';
 
 @Component({
   selector: 'attus-navbar',
@@ -33,7 +32,7 @@ export class NavbarComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    public navbarState: NavbarState,
+    public navbarStore: NavbarStore,
   ) {
     this.filterUsersForm = this.formBuilder.group({
       search: '',
@@ -41,6 +40,6 @@ export class NavbarComponent {
 
     this.filterUsersForm.valueChanges
       .pipe(takeUntilDestroyed())
-      .subscribe((value) => this.navbarState.search.next(value.search));
+      .subscribe((value) => this.navbarStore.search.next(value.search));
   }
 }

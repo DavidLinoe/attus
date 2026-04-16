@@ -18,7 +18,7 @@ import { BehaviorSubject, catchError, debounceTime, of, switchMap, tap } from 'r
 import { ApiService } from '../../../services/apiService.service';
 import { NewUserModalComponent } from '../components/newUserModal/newUserModal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { NavbarState } from '../../../layout/navbar/navbar.state';
+import { NavbarStore } from '../../../layout/navbar/store/navbar.store';
 
 //*exercicio 4
 @Component({
@@ -46,7 +46,7 @@ export class UsersComponent {
   constructor(
     private usersApiService: UsersApi,
     private formBuilder: FormBuilder,
-    private navbarState: NavbarState,
+    private navbarStore: NavbarStore,
   ) {
     this.newUsersForm = this.formBuilder.group({
       id: [''],
@@ -57,7 +57,7 @@ export class UsersComponent {
       phoneType: ['', [Validators.required]],
     });
 
-    this.navbarState.search
+    this.navbarStore.search
       .pipe(
         debounceTime(300),
         tap(() => this.loading.next(true)),
