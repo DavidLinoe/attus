@@ -5,8 +5,8 @@ import { NewUserForm } from '../../models/users.models';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'attus-new-user-modal',
@@ -18,8 +18,7 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatGridList,
-    MatGridTile,
+    MatSelectModule,
   ],
   styleUrl: './newUserModal.component.css',
 })

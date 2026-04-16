@@ -5,29 +5,62 @@
     <mat-form-field class="full-width" appearance="outline">
       <mat-label>Usuário (e-mail) *</mat-label>
       <input formControlName="email" type="email" matInput />
+      @if (newUsersForm.get('email')?.hasError('required') && newUsersForm.get('email')?.touched) {
+        <mat-error>E-mail obrigatório</mat-error>
+      }
+      @if (newUsersForm.get('email')?.hasError('email')) {
+        <mat-error>E-mail inválido</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="full-width" appearance="outline">
       <mat-label>Nome completo *</mat-label>
       <input formControlName="name" type="text" matInput />
+      @if (newUsersForm.get('name')?.hasError('required') && newUsersForm.get('name')?.touched) {
+        <mat-error>Nome obrigatório</mat-error>
+      }
+      @if (newUsersForm.get('nome')?.hasError('nome')) {
+        <mat-error>Nome inválido</mat-error>
+      }
     </mat-form-field>
 
     <div class="row-fields">
       <mat-form-field appearance="outline">
         <mat-label>CPF *</mat-label>
         <input formControlName="cpf" type="text" matInput placeholder="000.000.000-00" />
+        @if (newUsersForm.get('cpf')?.hasError('required') && newUsersForm.get('cpf')?.touched) {
+          <mat-error>Cpf obrigatório</mat-error>
+        }
+        @if (newUsersForm.get('cpf')?.hasError('cpf')) {
+          <mat-error>Cpf inválido</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Número do telefone *</mat-label>
-        <input formControlName="phone" type="text" matInput />
+        @if (
+          newUsersForm.get('phone')?.hasError('required') && newUsersForm.get('phone')?.touched
+        ) {
+          <mat-error> Numero obrigatório</mat-error>
+        }
+        @if (newUsersForm.get('phone')?.hasError('phone')) {
+          <mat-error>Numero inválido</mat-error>
+        }
+        <input formControlName="phone" type="text" placeholder="(14)99655-8089" matInput />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <select formControlName="phoneType" matNativeControl required>
-          <option value="celphone">CELULAR</option>
-          <option value="telephone">TELEFONE</option>
-        </select>
+        <mat-label>Tipo *</mat-label>
+        @if (
+          newUsersForm.get('phoneType')?.hasError('required') && newUsersForm.get('phoneType')?.touched
+        ) {
+          <mat-error> Tipo do Numero obrigatório</mat-error>
+        }
+
+        <mat-select formControlName="phoneType">
+          <mat-option value="celphone">CELULAR</mat-option>
+          <mat-option value="telephone">TELEFONE</mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
 
